@@ -1,4 +1,3 @@
-from molecule import Molecule
 from xyz_trajectory import XYZ_Trajectory
 from hydrogen_bond import Hydrogen_Bond
 from science_plot import Science_Plot
