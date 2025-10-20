@@ -1,5 +1,7 @@
+import numpy as np
+
 from xyz_trajectory import XYZ_Trajectory
-from hydrogen_bond import Hydrogen_Bond
+from hydrogen_bond import Hydrogen_Bond, Colvars_Lists
 from science_plot import Science_Plot
 
 file_path = '/home/mark/Desktop/VladimirR/Amidines_Mark/Amidines_mtd-pos-1.xyz'
@@ -13,4 +15,9 @@ for step in steps:
     q1.append(Hydrogen_Bond.colvar(step_atoms[9], step_atoms[8], step_atoms[10]))
     q2.append(Hydrogen_Bond.colvar(step_atoms[4], step_atoms[3], step_atoms[12]))
 
-Science_Plot.plt_clv_clv(q1, q2)
+
+culv_list = Colvars_Lists(np.array([q1, q2]))
+new_culv = culv_list.colvar_transform(np.array([[1, 1], [1, -1]]))
+
+Science_Plot.plt_clv_clv(culv_list)
+Science_Plot.plt_clv_clv(new_culv)

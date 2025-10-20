@@ -1,6 +1,7 @@
 import os
 
 from atom import Atom
+from hydrogen_bond import Hydrogen_Bond
 from molecule import Molecule
 
 class XYZ_Trajectory:
