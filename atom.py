@@ -20,6 +20,6 @@ class Atom:
         other_coords = other.coords
         sum = 0
         for i, axis_val in enumerate(other_coords):
-            sum += (float(axis_val) + float(self.coords[i]))**2
+            sum += (float(axis_val) - float(self.coords[i]))**2
         dist = math.sqrt(sum)
         return dist

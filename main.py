@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 from xyz_trajectory import XYZ_Trajectory
@@ -15,9 +17,15 @@ for step in steps:
     q1.append(Hydrogen_Bond.colvar(step_atoms[9], step_atoms[8], step_atoms[10]))
     q2.append(Hydrogen_Bond.colvar(step_atoms[4], step_atoms[3], step_atoms[12]))
 
-
 culv_list = Colvars_Lists(np.array([q1, q2]))
+dispersion = culv_list.dispersion
 new_culv = culv_list.colvar_transform(np.array([[1, 1], [1, -1]]))
+new_dispersion = new_culv.dispersion
 
-Science_Plot.plt_clv_clv(culv_list)
-Science_Plot.plt_clv_clv(new_culv)
+#Science_Plot.plt_clv_clv(culv_list, title='Amidines', x_label='y', y_label='x')
+#Science_Plot.plt_clv_clv(new_culv, title='Amidines', x_label='x+y', y_label='x-y')
+
+print(dispersion)
+
+print(new_dispersion)
+print(math.log10(new_dispersion[0]/new_dispersion[1]))

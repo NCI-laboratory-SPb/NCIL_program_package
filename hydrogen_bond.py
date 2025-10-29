@@ -74,6 +74,16 @@ class Colvars_Lists:
     @property
     def colvars_lsts(self):
         return self.__colvars_lsts
+    
+    @property
+    def dispersion(self):
+        """Make list of collective variables disperdions. Return list of floats"""
+        dispersions = []
+        colvars_lsts = self.colvars_lsts
+        for i in range(len(colvars_lsts)):
+            disp_val_i = float(np.var(colvars_lsts[i]))
+            dispersions.append(disp_val_i)
+        return dispersions
 
     def colvar_transform(self, translation_matrix):
         """Translation_matrix - np.arrey. Translate colvars and retrun new np.arrey of colvars"""
