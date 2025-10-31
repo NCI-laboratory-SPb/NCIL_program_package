@@ -25,13 +25,13 @@ class Hydrogen_Bond:
         hydrogen = atoms[1]
         donor = atoms[0]
         axceptor = atoms[2]
-        colvar = (hydrogen.distance(axceptor)-hydrogen.distance(donor))/2
+        colvar = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
         return colvar
     
     @staticmethod
     def colvar(donor, hydrogen, axceptor):
         """Input 3 Atom objects and return colvar"""
-        colvar = (hydrogen.distance(axceptor)-hydrogen.distance(donor))/2
+        colvar = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
         return colvar
     
 
