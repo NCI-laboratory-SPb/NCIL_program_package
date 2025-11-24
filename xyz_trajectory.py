@@ -1,4 +1,4 @@
-import os
+import random
 
 from atom import Atom
 from hydrogen_bond import Hydrogen_Bond
@@ -14,13 +14,30 @@ class XYZ_Trajectory:
 
     def __init__(self, steps):
         self.__steps = steps
+        self.__steps_number = len(steps)
 
     @property
     def steps(self):
+        """Return list of objs Molecule"""
         return self.__steps
+
+    @property
+    def steps_number(self):
+        """Return int"""
+        return self.__steps_number
+    
+    def random_steps(self, final_steps_number):
+        """Return XYZ_Trajectory obj with random n steps from old XYZ_Trajectory obj"""
+        steps_number = self.steps_number
+        new_steps = []
+        for i in range(final_steps_number):
+            selected_step = random.randint(1, steps_number)
+            new_steps.append(selected_step)
+        return XYZ_Trajectory(steps=new_steps)
 
     @staticmethod
     def xyz_traj_extr_from_xyz(file_path):
+        """Reading .xyz file with MD trajectory and return obj Trajectory"""
         file = open(file_path)
         data = file.readlines()
         steps = []
@@ -36,7 +53,7 @@ class XYZ_Trajectory:
                             float(data[i*(2+num_atoms)+2+j].split()[2]),
                             float(data[i*(2+num_atoms)+2+j].split()[3])
                             ]
-                    atoms.append(Atom(coords))
+                    atoms.append(Atom(coords=coords))
                 steps.append(Molecule(atoms=atoms))
 
         return XYZ_Trajectory(steps=steps)
