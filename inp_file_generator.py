@@ -16,7 +16,16 @@ class Calc_Data_Inp:
     }
     """
 
-    __BASIS_LIST = ['b3lyp']
+    __METHODS_LIST = ['b3lyp']
+    __BASISES_LIST = ['def2-tzvpd']
+
+    @classmethod
+    def get_methods_list(cls):
+        return cls.__METHODS_LIST
+
+    @classmethod
+    def get_basises_list(cls):
+        return cls.__BASISES_LIST
 
     def __init__(self, **params):
         self.__molecule = params['molecule']
@@ -30,9 +39,6 @@ class Calc_Data_Inp:
         self.__nmr = params.get('nmr', False)
         self.__cores = params.get('cores', 4)
         self.__memory = params.get('memory', 4)
-
-    def get_basis_list(self):
-        return self.__BASIS_LIST
 
     @property
     def molecule(self):
@@ -79,7 +85,7 @@ class Calc_Data_Inp:
         return self.__memory
 
     def generate_gaussian_inp(self, path, filename):
-        """Generate input .log file for gaussian with name - filename in dir - path, and return text of log file"""
+        """Generate input .log file for gaussian with name - filename in dir - path. Return filepath and text of log file"""
         molecule = self.molecule
         method = self.method
         basis = self.basis
@@ -94,7 +100,7 @@ class Calc_Data_Inp:
 
         basis_functions_place = '\n\n\n'
 
-        if basis not in Calc_Data_Inp.get_basis_list():
+        if basis not in Calc_Data_Inp.get_basises_list():
             basis = 'gen'
             basis_functions_place = basis_set_functions
 
@@ -116,9 +122,17 @@ class Calc_Data_Inp:
         atoms = molecule.atoms
 
         for i in atoms:
-            atoms_coordinates.append(f'{i.type} {' '.join(i.coords)}')
+            atoms_coordinates.append(f'{i.atom_name}    {'\t'.join((str(round(x, 13))).rjust(17) for x in i.coords)}')
 
-        lines = [f'%nprocshared={cores}', f'%mem={memory}GB', task_line, '', f'{name}', '', *atoms_coordinates, '', f'{basis_functions_place}', '\n\n\n']
+        lines = [f'%nprocshared={cores}', 
+                 f'%mem={memory}GB', 
+                 task_line, '', 
+                 f'{name}', 
+                 '', 
+                 *atoms_coordinates, 
+                 '', 
+                 f'{basis_functions_place}', 
+                 '\n\n\n']
 
         os.makedirs(path, exist_ok=True)
         filepath = os.path.join(path, filename)
@@ -127,4 +141,4 @@ class Calc_Data_Inp:
             for line in lines:
                 file.write(line + '\n')
         
-        return lines
+        return filepath, lines

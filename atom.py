@@ -7,16 +7,16 @@ class Atom:
     coords : list
     """
 
-    def __init__(self, **params):
-        self.__atom_name = params.get('tupe', False)
-        self.__coords = params['coords']
-
+    def __init__(self, atom_name='X', coords=[0.0, 0.0, 0.0]):
+        self.__atom_name = atom_name
+        self.__coords = coords
+                               
     @property
     def atom_name(self):
         return self.__atom_name
 
     @property
-    def cords(self):
+    def coords(self):
         """Retroun list of coords"""
         return self.__coords
     
