@@ -17,7 +17,7 @@ class Atom:
 
     @property
     def coords(self):
-        """Retroun list of coords"""
+        """Return list of coords"""
         return self.__coords
     
     def distance(self, other):

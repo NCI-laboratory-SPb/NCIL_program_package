@@ -1,7 +1,5 @@
 import numpy as np
 
-from atom import Atom
-
 class Hydrogen_Bond:
     """Class Hydrogen_Bond.
     
@@ -28,11 +26,15 @@ class Hydrogen_Bond:
         colvar = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
         return colvar
     
-    @staticmethod
-    def colvar(donor, hydrogen, axceptor):
-        """Input 3 Atom objects and return colvar"""
-        colvar = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
-        return colvar
+    @property
+    def colvar2(self):
+        """Return float colvar (dist2+dist1)/2"""
+        atoms = self.atoms
+        hydrogen = atoms[1]
+        donor = atoms[0]
+        axceptor = atoms[2]
+        colvar2 = (hydrogen.distance(donor)+hydrogen.distance(axceptor))/2
+        return colvar2
     
 
 class Hydrogen_Bonds:
@@ -53,10 +55,11 @@ class Hydrogen_Bonds:
 
     @property
     def colvars_lists(self):
+        """Return obj Colvars_Lists"""
         colvars_lists = []
         h_bonds = self.h_bonds
-        for i in h_bonds:
-            colvars_lists.append(i.colvar)
+        for h_bond in h_bonds:
+            colvars_lists.append(h_bond.colvar)
         return Colvars_Lists(colvars_lists)
 
 
@@ -65,7 +68,7 @@ class Colvars_Lists:
     
     Parameters:
     colvars_lsts : np.array
-    Arrey, when row - list of colvar.
+    Array, when row - list of colvar.
     """
 
     def __init__(self, colvars_lsts):

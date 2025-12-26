@@ -1,7 +1,7 @@
 import random
 
-from atom import Atom
-from molecule import Molecule
+from .atom import Atom
+from .molecule import Molecule
 
 class XYZ_Trajectory:
     """Class XYZ_Trajectory
