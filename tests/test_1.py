@@ -1,10 +1,10 @@
-from xyz_trajectory import XYZ_Trajectory
-from hydrogen_bond import Hydrogen_Bond, Hydrogen_Bonds
-from inp_file_generator import Calc_Data_Inp
-from science_plot import Science_Plot
 import os
+
 import matplotlib.pyplot as plt
 import numpy as np
+
+from xyz_trajectory import XYZ_Trajectory
+from hydrogen_bond import Hydrogen_Bond
 
 file_path = '/home/mark/Desktop/VladimirR/Amidines/MLP/amidines.xyz'
 file_dir = os.path.dirname(file_path)
