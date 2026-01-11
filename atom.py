@@ -32,20 +32,20 @@ class Atom:
         return dist
     
     @staticmethod
-    def corner(atom1, atom2, atom3):
-        """Return float corner in degrees between atoms atom1-atom2-atom3"""
+    def angle(atom1, atom2, atom3):
+        """Return float angle in degrees between atoms atom1-atom2-atom3"""
         a1_coords = np.array(atom1.coords)
         a2_coords = np.array(atom2.coords)
         a3_coords = np.array(atom3.coords)
         dist_vect_a2_a1 = a1_coords - a2_coords
         dist_vect_a2_a3 = a3_coords - a2_coords
-        corner_cos = np.dot(dist_vect_a2_a1, dist_vect_a2_a3)/(np.linalg.norm(dist_vect_a2_a3)*np.linalg.norm(dist_vect_a2_a1))
-        corner_rad = np.arccos(corner_cos)
-        return corner_rad/math.pi*180
+        angle_cos = np.dot(dist_vect_a2_a1, dist_vect_a2_a3)/(np.linalg.norm(dist_vect_a2_a3)*np.linalg.norm(dist_vect_a2_a1))
+        angle_rad = np.arccos(angle_cos)
+        return angle_rad/math.pi*180
     
     @staticmethod
-    def torsion_corner(atom1, atom2, atom3, atom4):
-        """Return float torsion corner atom1-atom2-atom3-atom4"""
+    def torsion_angle(atom1, atom2, atom3, atom4):
+        """Return float torsion angle atom1-atom2-atom3-atom4"""
         a1_coords = np.array(atom1.coords)
         a2_coords = np.array(atom2.coords)
         a3_coords = np.array(atom3.coords)
@@ -57,5 +57,5 @@ class Atom:
         n2 = np.cross(r2, r3)
         x = np.dot(n1, n2)
         y = np.dot(r2/np.linalg.norm(r2), np.cross(n1, n2))
-        tors_corner = np.arctan2(y, x)
-        return tors_corner/math.pi*180
+        tors_angle = np.arctan2(y, x)
+        return tors_angle/math.pi*180
