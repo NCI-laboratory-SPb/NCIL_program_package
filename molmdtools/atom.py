@@ -12,7 +12,15 @@ class Atom:
     coords : list
     """
 
-    def __init__(self, atom_name='X', coords=[0.0, 0.0, 0.0], atom_mass=None):
+    def __init__(self, atom_name='X', coords=None, atom_mass=None):
+        if coords is None:
+            coords = [0.0, 0.0, 0.0]
+        else:
+            coords = [float(coord) for coord in coords]
+
+        if len(coords) != 3:
+            raise ValueError("Coords must be a list of length 3.")
+
         self.__atom_name = atom_name
         self.__atom_mass = atom_mass
         self.__coords = coords
@@ -61,14 +69,14 @@ class Atom:
             other_coords = other.coords
             sum = 0
             for i, axis_val in enumerate(other_coords):
-                sum += (float(axis_val) - float(self.coords[i]))**2
+                sum += (axis_val - self.coords[i])**2
             dist = math.sqrt(sum)
             return dist
         else:
             other_coords = other.coords
             sum = 0
             for i, axis_val in enumerate(other_coords):
-                dist_axis = abs(float(axis_val) - float(self.coords[i]))
+                dist_axis = abs(axis_val - self.coords[i])
                 dist_axis %= cell[i]
                 if dist_axis > cell[i]/2:
                     dist_axis = cell[i] - dist_axis
