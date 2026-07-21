@@ -128,8 +128,8 @@ class XYZ_Trajectory:
     @staticmethod
     def extr_from_xyz(file_name):
         """Reading .xyz file with MD trajectory and return obj Trajectory"""
-        file = open(file_name)
-        data = file.readlines()
+        with open(file_name, "w", encoding="utf-8") as file:
+            data = file.readlines()
         steps = []
 
         if len(data[0].split()) == 1 and 'time' in data[1].lower() or 'generated' in data[1].lower():
@@ -176,6 +176,9 @@ class XYZ_Trajectory:
                             ]
                     atoms.append(Atom(atom_name=atom_name, coords=coords))
                 steps.append(Molecule(atoms=atoms))
+        
+        else:
+            raise ValueError(f"Unrecognized XYZ comment-line format in {file_name}")
 
         return XYZ_Trajectory(steps=steps)
 
@@ -354,11 +357,11 @@ class XYZ_Trajectory:
                 new_lines.append(f"{atom.atom_name}    {coords}\n")
 
         if file_name == None:
-            with open(f"trajectory_{start_step_num}_{final_step_num}", "w") as xyz_traj_file:
+            with open(f"trajectory_{start_step_num}_{final_step_num}", "w", encoding="utf-8") as xyz_traj_file:
                 xyz_traj_file.writelines(new_lines)
 
         else:
-            with open(file_name, "w") as xyz_traj_file:
+            with open(file_name, "w", encoding="utf-8") as xyz_traj_file:
                 xyz_traj_file.writelines(new_lines)
         
         return int(final_step_num - start_step_num)
