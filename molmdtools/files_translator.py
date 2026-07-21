@@ -14,7 +14,7 @@ class Files_Translator:
         if final_filename == None:
                 final_filename = ".".join(filename.split(".")[:-1]) + ".xyz"
     
-        with open(filename, "r") as start_file:
+        with open(filename, "r", encoding="utf-8") as start_file:
             sf = start_file.readlines()
             atoms_num = int(sf[sf.index("ITEM: NUMBER OF ATOMS\n")+1])
 
@@ -62,5 +62,5 @@ class Files_Translator:
                     elif mol == 0:
                         continue
             
-        with open(final_filename, "w") as new_file:
+        with open(final_filename, "w", encoding="utf-8") as new_file:
             new_file.writelines(nf[2::])
