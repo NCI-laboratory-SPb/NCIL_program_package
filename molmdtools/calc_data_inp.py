@@ -137,7 +137,7 @@ class Calc_Data_Inp:
         os.makedirs(path, exist_ok=True)
         filepath = os.path.join(path, filename)
         
-        with open(filepath, 'w') as file:
+        with open(filepath, 'w', encoding="utf-8") as file:
             for line in lines:
                 file.write(line + '\n')
         
