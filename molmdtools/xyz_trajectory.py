@@ -128,7 +128,7 @@ class XYZ_Trajectory:
     @staticmethod
     def extr_from_xyz(file_name):
         """Reading .xyz file with MD trajectory and return obj Trajectory"""
-        with open(file_name, "w", encoding="utf-8") as file:
+        with open(file_name, "r", encoding="utf-8") as file:
             data = file.readlines()
         steps = []
 
