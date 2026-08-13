@@ -93,18 +93,15 @@ class XYZ_Trajectory:
             new_steps.append(steps[i])
         return XYZ_Trajectory(steps=new_steps, cell=self.cell)
 
-    def random_steps(self, final_steps_number):
+    def random_steps(self, final_steps_number, sort=True):
         """Return XYZ_Trajectory obj with random n steps from old XYZ_Trajectory obj"""
+        if final_steps_number > self.steps_number:
+            raise ValueError(f"Cannot select {final_steps_number} unique steps from a trajectory of {self.steps_number}.")
+        indices = random.sample(range(self.steps_number), final_steps_number)
+        if sort:
+            indices = sorted(indices)
         steps = self.steps
-        steps_number = self.steps_number
-        random_ind_list = []
-        new_steps = []
-        for i in range(final_steps_number):
-            selected_step = random.randint(0, steps_number)
-            while selected_step in random_ind_list:
-                selected_step = random.randint(0, steps_number)
-            random_ind_list.append(selected_step)
-            new_steps.append(steps[selected_step])
+        new_steps = [steps[i] for i in indices]
         return XYZ_Trajectory(steps=new_steps, cell=self.cell)
     
     def sum_traj(self, trajs):
