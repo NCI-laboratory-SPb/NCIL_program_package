@@ -341,9 +341,9 @@ class XYZ_Trajectory:
     def save(self, start_step_num = None, final_step_num = None, file_name = None):
         """Save steps [start_step_num, final_step_num] (inclusive) to an .xyz file.
         Return the number of steps written."""
-        if start_step_num == None:
+        if start_step_num is None:
             start_step_num = 0
-        if final_step_num == None:
+        if final_step_num is None:
             final_step_num = self.steps_number - 1
         if not (0 <= start_step_num <= final_step_num < self.steps_number):
             raise ValueError(
